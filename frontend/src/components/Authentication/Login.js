@@ -85,6 +85,7 @@ const Login = () => {
             <FormLabel>Email</FormLabel>
             <Input
                 placeholder='Enter Your Email'
+                value={email}
                 onChange={(e) => setEmail(e.target.value)}
             />
         </FormControl>
@@ -95,6 +96,7 @@ const Login = () => {
                 <Input
                     type={show ? 'text' : 'password'}
                     placeholder='Enter Your Password'
+                    value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <InputRightElement width={'4.5rem'}>
@@ -111,8 +113,9 @@ const Login = () => {
               colorScheme={'blue'}
               width='100%'
               style={{ marginTop: 15 }}
-              onClick={submitHandler}
-          >
+                onClick={submitHandler}
+                isLoading={loading}
+                >
               Log In
         </Button>
         
@@ -127,7 +130,7 @@ const Login = () => {
             setPassword("123456");
           }}
           >
-              Get Guest Credentials
+              Get Guest User Credentials
           </Button>
 
         </VStack>
