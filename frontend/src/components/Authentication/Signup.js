@@ -2,7 +2,7 @@ import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 import { VStack } from '@chakra-ui/layout';
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import React, { useState } from 'react';
-import { Button } from "@chakra-ui/button";
+import { Button, isLoading } from "@chakra-ui/button";
 
 const Signup = () => {
     const [name, setName] = useState();
@@ -16,7 +16,9 @@ const Signup = () => {
 
     const postDetails = (pics) => { };
 
-    const submitHandler = () => { };
+    const submitHandler = () => {
+
+    };
 
     return (
         <VStack spacing='5px' color='black'>
@@ -36,6 +38,8 @@ const Signup = () => {
                 />
             </FormControl>
 
+            {/* Can add a require top be 8 characters long, have numbers and letters and a special char
+            */}
             <FormControl id='password' isRequired>
                 <FormLabel>Enter Your Password</FormLabel>
                 <InputGroup>
@@ -52,6 +56,8 @@ const Signup = () => {
                 </InputGroup>
             </FormControl>
 
+            {/* Can add a require passwords to be matching
+            */}
             <FormControl id='confirmPass' isRequired>
                 <FormLabel>Confirm Password</FormLabel>
                 <InputGroup>
@@ -78,6 +84,8 @@ const Signup = () => {
                 />
             </FormControl>
 
+            {/* Can add loading spinners on click
+            */}
             <Button
                 colorScheme={'blue'}
                 width='100%'

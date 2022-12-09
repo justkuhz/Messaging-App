@@ -40,6 +40,8 @@ const Login = () => {
             </InputGroup>
         </FormControl>
 
+        {/* Can add loading spinners on click
+            */}
         <Button
               colorScheme={'blue'}
               width='100%'
@@ -49,6 +51,8 @@ const Login = () => {
               Log In
         </Button>
         
+        {/* Can add loading spinners on click
+            */}
           <Button
           colorScheme={'red'}
           width='100%'
