@@ -1,3 +1,5 @@
+// Sign up for a new account component of home page
+
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 import { VStack } from '@chakra-ui/layout';
 import { FormControl, FormLabel } from "@chakra-ui/form-control";

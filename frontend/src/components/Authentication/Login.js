@@ -1,3 +1,5 @@
+// Login components for home page
+
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 import { VStack } from '@chakra-ui/layout';
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
@@ -9,6 +11,7 @@ const Login = () => {
     const [password, setPassword] = useState();
     const [show, setShow] = useState(false);
 
+    // Hides/shows password
     const handleClick = () => setShow(!show);
 
     const submitHandler = () => { };

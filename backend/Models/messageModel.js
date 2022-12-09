@@ -1,3 +1,5 @@
+// Message model, these are sent in chats
+
 const mongoose = require("mongoose");
 
 const messageModel = mongoose.Schema({

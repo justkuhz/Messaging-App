@@ -1,3 +1,5 @@
+// Home/default landing page
+
 import React from 'react';
 import { Container, Box, Text, Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import Login from "../components/Authentication/Login";

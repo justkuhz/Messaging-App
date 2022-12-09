@@ -1,3 +1,5 @@
+// sample data to test webpage display/formatting
+
 const chats = [
   {
     isGroupChat: false,
