@@ -4,7 +4,8 @@ const asyncHandler = require("express-async-handler");
 const generateToken = require("../config/generateToken");
 const User = require("../Models/userModel");
 
-const registerUser = asyncHandler(async (req, res) => {
+// Register user function, creates new users if one does not yet exist in database
+const registerUser = asyncHandler(async(req, res) => {
     const { name, email, password, pic } = req.body;
 
     if (!name || !email || !password) {
@@ -40,12 +41,14 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 });
 
+// Checks if an email and its correct password exists in the db
 const authUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
 
-    if (user && (await User.matchPassword(password))) {
+    // there needs to be an email and the password needs to match
+    if (user && (await user.matchPassword(password))) {
         res.json({
             _id: user._id,
             name: user.name,
@@ -59,4 +62,4 @@ const authUser = asyncHandler(async (req, res) => {
     }
 });
 
-module.exports = { registerUser };
+module.exports = { registerUser, authUser };

@@ -1,7 +1,7 @@
 // User Model and Functions
 
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
 
 const userSchema = mongoose.Schema(
     {
@@ -23,18 +23,17 @@ const userSchema = mongoose.Schema(
 
 // encrpyt a given password to authenticate with passwords in database
 userSchema.methods.matchPassword = async function (enteredPassword) {
-    return await bcrypt.compare(enteredPassword, this.password);
+    return await bcryptjs.compare(enteredPassword, this.password);
 }
-
 
 // before saving user data into database, encrypt the password
 userSchema.pre('save', async function (next) {
-    if (!this.modified) {
+    if (!this.isModified()) {
         next();
     }
 
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
+    const salt = await bcryptjs.genSalt(10);
+    this.password = await bcryptjs.hash(this.password, salt);
 })
 
 const User = mongoose.model("User", userSchema);

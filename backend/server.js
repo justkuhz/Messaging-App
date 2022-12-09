@@ -6,6 +6,7 @@ const { chats } = require("./data/data");
 const connectDB = require("./config/db");
 const colors = require("colors");
 const userRoutes = require("./routes/userRoutes");
+const { notFound, errorHandler } = require('./middlewares/errorMiddleware');
 
 // connects to .env file
 dotenv.config();
@@ -28,6 +29,9 @@ app.get('/', (req, res) => {
 app.use('/api/user', userRoutes);
 
 const PORT = process.env.PORT || 5000; // PORT set to 8000 by default
+
+app.use(notFound);
+app.use(errorHandler);
 
 // app API to check if our local server started or not and the port it is on
 app.listen(PORT, console.log(`Server started on PORT ${PORT}`.yellow.bold));

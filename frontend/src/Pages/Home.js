@@ -29,7 +29,6 @@ const Home = () => {
           <br />
         </Text>
         <Text
-          as={'i'}
           fontSize={'2xl'}
           fontFamily={'Work sans'}
           color={'black'}

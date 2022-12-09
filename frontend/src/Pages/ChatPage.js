@@ -22,4 +22,4 @@ const ChatPage = () => {
   ))}</div>;
 };
 
-export default ChatPage
+export default ChatPage;
