@@ -6,6 +6,7 @@ const { chats } = require("./data/data");
 const connectDB = require("./config/db");
 const colors = require("colors");
 const userRoutes = require("./routes/userRoutes");
+const chatRoutes = require("./routes/chatRoutes");
 const { notFound, errorHandler } = require('./middlewares/errorMiddleware');
 
 // connects to .env file
@@ -28,8 +29,12 @@ app.get('/', (req, res) => {
 // app API to accomodate router / API endpoints -- creating and authenticating users
 app.use('/api/user', userRoutes);
 
+// app API to accomodate router / API endpoints -- managing chats
+app.use('/api/chat', chatRoutes);
+
 const PORT = process.env.PORT || 5000; // PORT set to 8000 by default
 
+// Error handling middlewares
 app.use(notFound);
 app.use(errorHandler);
 

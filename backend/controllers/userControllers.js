@@ -62,4 +62,25 @@ const authUser = asyncHandler(async (req, res) => {
     }
 });
 
-module.exports = { registerUser, authUser };
+// /api/user?search= (called a query with variable called search)
+// returns all users that include the letter k
+const allUsers = asyncHandler(async (req, res) => {
+    const keyword = req.query.search
+        ? {
+            $or: [
+            // or operator must fulfill at least one of the following two requests
+            // if either of these requests match, it will return it as a JSON to the query
+
+            // checking the search variable and "i" option matches both upper and lower case
+                { name: { $regex: req.query.search, $options: "i" } }, // searching inside name
+                { email: { $regex: req.query.search, $options: "i" } }, // searching inside email
+                
+            ],
+        }
+        : {};
+    
+    const users = await User.find(keyword).find({ _id: { $ne: req.user._id } });
+    res.send(users);
+});
+
+module.exports = { registerUser, authUser, allUsers };
