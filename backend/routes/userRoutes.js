@@ -1,15 +1,18 @@
 // This class holds the api endpoints we are creating for the User model.
 
 const express = require('express');
-const { registerUser, authUser } = require('../controllers/userControllers');
+const { registerUser, authUser, allUsers } = require('../controllers/userControllers');
+const { protect } = require("../middlewares/authMiddleware");
 
-// router API /
+// router API endpoint
 const router = express.Router();
 
-// router API POST for registering a new user
-router.route('/').post(registerUser);
+// POST for registering a new user
+// GET list of all users
+router.route('/').post(registerUser).get(protect, allUsers);
 
-// router API POST for confirming a username + password exists in database
+// POST for confirming a username + password exists in database
 router.route('/login').post(authUser);
+
 
 module.exports = router;
