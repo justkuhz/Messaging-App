@@ -2,20 +2,35 @@
 // Make sure to redirect someone from /chat to the home page if they are not signed in.
 
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import background from '../resources/chatpage.jpg';
+import { Box } from "@chakra-ui/react"
+import { ChatState } from '../Context/ChatProvider';
+import SideDrawer from '../components/misc/SideDrawer';
+import UserChats from '../components/UserChats';
+import ChatBox from '../components/ChatBox';
 
 const ChatPage = () => {
     
-    return <div style={{
+  // destructure user information from context
+  const { user } = ChatState();
+  const [fetchAgain, setFetchAgain] = useState(false);
+
+  return (
+    <Box style={{
         width: "100%",
         backgroundImage: `url(${background})`,
         height: "100vh",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
     }}>
-      
-  </div>;
+      {user && <SideDrawer />}
+        <Box display="flex" justifyContent="space-between" w="100%" h="91.5vh" p="10px">
+          {user && <UserChats fetchAgain={fetchAgain} />}
+          {user && (<ChatBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
+        )}
+      </Box>
+    </Box>
+  )
 };
 
 export default ChatPage;
