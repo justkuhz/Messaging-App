@@ -30,7 +30,7 @@ const accessChat = expressAsyncHandler(async (req, res) => {
 
     isChat = await User.populate(isChat, {
         path: 'latestMessage.sender', // finds the sender of the latest message from message model
-        select: "name pic email",
+        select: "name picture email",
     });
 
     // if chat exists, send the chat. We send array element 0 since there should only be one chat between
@@ -74,7 +74,7 @@ const fetchChat = expressAsyncHandler(async (req, res) => {
             .then(async (results) => {
                 results = await User.populate(results, {
                     path: 'latestMessage.sender', // finds the sender of the latest message from message model
-                    select: "name pic email",
+                    select: "name picture email",
                 });
 
                 res.status(200).send(results);

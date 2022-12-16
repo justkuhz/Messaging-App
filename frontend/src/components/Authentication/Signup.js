@@ -14,7 +14,7 @@ const Signup = () => {
     const [email, setEmail] = useState();
         const [password, setPassword] = useState();
     const [confirmpassword, setConfirmpassword] = useState();
-    const [pic, setPic] = useState();
+    const [picture, setPicture] = useState();
     const [show, setShow] = useState(false);
     const [loading, setLoading] = useState(false);
     const toast = useToast();
@@ -46,7 +46,7 @@ const Signup = () => {
                 body: data,
             }).then((res) => res.json())
                 .then(data => {
-                    setPic(data.url.toString());
+                    setPicture(data.url.toString());
                     console.log("Picture uploaded to Cloudinary Media Library");
                     console.log(data);
                     setLoading(false);
@@ -108,7 +108,7 @@ const Signup = () => {
 
             const { data } = await axios.post(
                 "/api/user",
-                { name, email, password, pic },
+                { name, email, password, picture },
                 config
             );
 

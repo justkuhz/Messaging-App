@@ -1,3 +1,5 @@
+// Javascript function to run the webapp which is called in index.js/rendered in the root
+
 import './App.css';
 import { Route } from "react-router-dom";
 import Home from "./Pages/Home";

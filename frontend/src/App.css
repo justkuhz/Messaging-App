@@ -3,7 +3,6 @@
 .App {
     min-height: 100vh;
     display: flex;
-    background-image: url('./resources/homepage.jpg');
     background-size: cover;
     background-position: center;
     color: black;
