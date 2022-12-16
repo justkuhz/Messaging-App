@@ -10,19 +10,22 @@ import UserChats from '../components/UserChats';
 import ChatBox from '../components/ChatBox';
 
 const ChatPage = () => {
-    
+  
   // destructure user information from context
   const { user } = ChatState();
   const [fetchAgain, setFetchAgain] = useState(false);
 
   return (
-    <Box style={{
-        width: "100%",
-        backgroundImage: `url(${background})`,
-        height: "100vh",
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-    }}>
+    <Box 
+      width="100%"
+      backgroundImage={`url(${background})`}
+      height="100vh"
+      backgroundSize="cover"
+      backgroundRepeat="no-repeat"
+      backgroundPosition={"center"}
+      bgAttachment="fixed"
+      overflowY={"scroll"}
+    >
       {user && <SideDrawer />}
         <Box display="flex" justifyContent="space-between" w="100%" h="91.5vh" p="10px">
           {user && <UserChats fetchAgain={fetchAgain} />}

@@ -1,10 +1,10 @@
 // Home/default landing page
 
 import React, { useEffect } from 'react';
-import { Container, Box, Image, Text, Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+import { Container, Box, Text, Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import Login from "../components/Authentication/Login";
 import Signup from "../components/Authentication/Signup";
-import { useHistory } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import background from "../resources/homepage.jpg"
 
 const Home = () => {
@@ -17,7 +17,8 @@ const Home = () => {
 
     // If user info found, re-route to chats
     if (userInfo) {
-        history.push("/chats");
+        // history.push("/chats");
+      <Redirect to = "/chats"/>
     }
   }, [history])
   
@@ -27,8 +28,11 @@ const Home = () => {
       display='flex'
       height={'100vh'}
       width={'100vw'}
-      backgroundSize='cover'
       backgroundRepeat={'no-repeat'}
+      bgSize="cover"
+      backgroundAttachment={"fixed"}
+      backgroundPosition="center"
+      overflowY={"scroll"}
     >
       <Container maxW='xl' centerContent>
         <Box

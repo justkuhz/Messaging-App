@@ -36,7 +36,7 @@ const Signup = () => {
             return;
         }
         
-        if (pics.type === "image/jpeg" || pics.type === "impage/png") {
+        if (pics.type === "image/jpeg" || pics.type === "image/png") {
             const data = new FormData();
             data.append("file", pics);
             data.append("upload_preset", "chat-app");
