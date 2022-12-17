@@ -28,11 +28,11 @@ const sendMessage = expressAsyncHandler(async (req, res) => {
     var message = await Message.create(newMessage);
 
     // adding all of these attributes to our message object
-    message = await message.populate("sender", "name pic");
+    message = await message.populate("sender", "name picture");
     message = await message.populate("chat");
     message = await User.populate(message, {
       path: "chat.users",
-      select: "name pic email",
+      select: "name picture email",
     });
 
     // update latest message
@@ -53,7 +53,7 @@ const allMessages = expressAsyncHandler(async (req, res) => {
   try {
     // access chatID via param of request ("/:chatID")
     const messages = await Message.find({ chat: req.params.chatID })
-      .populate("sender", "name pic email")
+      .populate("sender", "name picture email")
       .populate("chat");
 
     res.json(messages);
