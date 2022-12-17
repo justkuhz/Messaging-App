@@ -7,7 +7,8 @@ const connectDB = require("./config/db");
 const colors = require("colors");
 const userRoutes = require("./routes/userRoutes");
 const chatRoutes = require("./routes/chatRoutes");
-const { notFound, errorHandler } = require('./middlewares/errorMiddleware');
+const messageRoutes = require("./routes/messageRoutes");
+const { notFound, errorHandler } = require("./middlewares/errorMiddleware");
 
 // connects to .env file
 dotenv.config();
@@ -22,15 +23,18 @@ const app = express();
 app.use(express.json());
 
 // app API GET to check if the webserver is up
-app.get('/', (req, res) => {
-    res.send("API is Running Successfully");
+app.get("/", (req, res) => {
+  res.send("API is Running Successfully");
 });
 
 // app API to accomodate router / API endpoints -- creating and authenticating users
-app.use('/api/user', userRoutes);
+app.use("/api/user", userRoutes);
 
 // app API to accomodate router / API endpoints -- managing chats
-app.use('/api/chat', chatRoutes);
+app.use("/api/chat", chatRoutes);
+
+// app API to accomodate router / API endpoints -- sending and receiving messages
+app.use("/api/message", messageRoutes);
 
 const PORT = process.env.PORT || 5000; // PORT set to 8000 by default
 
