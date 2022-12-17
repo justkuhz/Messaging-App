@@ -27,7 +27,7 @@ import ProfileModal from "./ProfileModal";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import ChatLoading from "../ChatLoading";
-import UserListItem from "../UserListItem";
+import UserListItem from "../UserTools/UserListItem";
 
 const SideDrawer = () => {
   // Different use states for the side drawer

@@ -5,8 +5,9 @@ import axios from "axios";
 import { AddIcon } from "@chakra-ui/icons";
 import ChatLoading from "./ChatLoading";
 import { getSender } from "../config/ChatLogic";
+import GroupChatModal from "./misc/GroupChatModal";
 
-const UserChats = () => {
+const UserChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
   const { user, selectedChat, setSelectedChat, chats, setChats } = ChatState();
 
@@ -38,10 +39,11 @@ const UserChats = () => {
     }
   };
 
+  // Grab userInfo from local storage and then use that to get the user's chats
   useEffect(() => {
     setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
     fetchChats();
-  }, []);
+  }, [fetchAgain]);
 
   return (
     <Box
@@ -65,13 +67,15 @@ const UserChats = () => {
         alignItems="center"
       >
         My Chats
-        <Button
-          display={"flex"}
-          fontSize={{ base: "15px" }}
-          rightIcon={<AddIcon />}
-        >
-          New Group Chat
-        </Button>
+        <GroupChatModal>
+          <Button
+            display={"flex"}
+            fontSize={{ base: "15px" }}
+            rightIcon={<AddIcon />}
+          >
+            New Group Chat
+          </Button>
+        </GroupChatModal>
       </Box>
 
       <Box
@@ -90,7 +94,7 @@ const UserChats = () => {
               <Box
                 onClick={() => setSelectedChat(chat)}
                 cursor="pointer"
-                background={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
+                background={selectedChat === chat ? "whatsapp.500" : "#E8E8E8"}
                 color={selectedChat === chat ? "white" : "black"}
                 paddingX={"3"}
                 paddingY={"2"}
