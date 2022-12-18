@@ -9,6 +9,7 @@ const userRoutes = require("./routes/userRoutes");
 const chatRoutes = require("./routes/chatRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 const { notFound, errorHandler } = require("./middlewares/errorMiddleware");
+const { use } = require("./routes/userRoutes");
 
 // connects to .env file
 dotenv.config();
@@ -43,4 +44,46 @@ app.use(notFound);
 app.use(errorHandler);
 
 // app API to check if our local server started or not and the port it is on
-app.listen(PORT, console.log(`Server started on PORT ${PORT}`.yellow.bold));
+const server = app.listen(
+  PORT,
+  console.log(`Server started on PORT ${PORT}`.yellow.bold)
+);
+
+// Setting up socket.io functionality on local-host server
+const io = require("socket.io")(server, {
+  pingTimeout: 60000, // timeout after 60s to save bandwidth
+  cors: {
+    origin: "http://localhost:3000",
+  },
+});
+
+// Connection point for server-client sockets
+io.on("connection", (socket) => {
+  console.log("Connected to Socket.IO".blue.bold);
+
+  // Create new socket for connection
+  socket.on("setup", (userData) => {
+    socket.join(userData._id);
+    socket.emit("connected");
+  });
+
+  // User joins socket for a chat room
+  socket.on("join chat", (room) => {
+    socket.join(room);
+    console.log("User joined room " + room);
+  });
+
+  // Socket for receiving messages
+  socket.on("new message", (newMessageReceived) => {
+    var chat = newMessageReceived.chat;
+
+    if (!chat.users) return console.log("chat.users not defined"); // return if chat has no users
+
+    chat.users.forEach((user) => {
+      if (user._id == newMessageReceived.sender._id) return; // skip us so we don't send it to ourselves
+
+      // Inside the user's room, emit or send the new message
+      socket.in(user._id).emit("message received", newMessageReceived);
+    });
+  });
+});

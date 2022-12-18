@@ -18,6 +18,11 @@ import UpdateGroupChatModal from "./misc/UpdateGroupChatModal";
 import axios from "axios";
 import "./styles.css";
 import ScrollableChat from "./ScrollableChat";
+import io from "socket.io-client";
+
+// endpoint for socket.io connection
+const ENDPOINT = "http://localhost:8000";
+var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   // import context
@@ -28,6 +33,37 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [newMessage, setNewMessage] = useState();
+  const [socketConnected, setSocketConnected] = useState(false);
+
+  // Socket connection to local-host server
+  useEffect(() => {
+    socket = io(ENDPOINT);
+    socket.emit("setup", user);
+    socket.on("connection", () => {
+      setSocketConnected(true);
+    });
+  }, []);
+
+  // Whenever something in selectedChat state changes, fetch all messages for the chat
+  useEffect(() => {
+    fetchMessages();
+
+    selectedChatCompare = selectedChat;
+  }, [selectedChat]);
+
+  // Monitoring this socket, if we receive anything we update
+  useEffect(() => {
+    socket.on("message received", (newMessageReceived) => {
+      if (
+        !selectedChatCompare ||
+        selectedChatCompare._id !== newMessageReceived.chat._id
+      ) {
+        // give notification to notification icon
+      } else {
+        setMessages([...messages, newMessageReceived]);
+      }
+    });
+  });
 
   // sending messages into a chat
   const sendMessage = async (event) => {
@@ -51,6 +87,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           },
           config
         );
+
+        // send out data into socket as newMessage
+        socket.emit("new message", data);
 
         setMessages([...messages, data]);
       } catch (error) {
@@ -94,7 +133,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
       console.log(data);
       setMessages(data);
-      setLoading(false);
+
+      socket.emit("join chat", selectedChat._id);
     } catch (error) {
       toast({
         title: "Error Occured!",
@@ -107,11 +147,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     }
     setLoading(false);
   };
-
-  // Whenever something in selectedChat state changes, fetch all messages for the chat
-  useEffect(() => {
-    fetchMessages();
-  }, [selectedChat]);
 
   // If no chat is selected, interface tells us to select one to begin
   // Otherwise, we display the selected chat
@@ -173,7 +208,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               />
             ) : (
               <div className="messages">
-                <ScrollableChat messages={messages} />
+                <ScrollableChat id="chatContainer" messages={messages} />
               </div>
             )}
             <FormControl onKeyDown={sendMessage} isRequired marginTop={3}>

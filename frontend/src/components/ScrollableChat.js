@@ -18,7 +18,7 @@ const ScrollableChat = ({ messages }) => {
     <div
       style={{
         overflowX: "hidden",
-        overflowY: "auto",
+        overflowY: "scroll",
       }}
     >
       {messages &&
@@ -29,8 +29,8 @@ const ScrollableChat = ({ messages }) => {
               <Tooltip label={m.sender.name} placement="bottom-start" hasArrow>
                 <Avatar
                   marginTop="7px"
-                  marginRight={1}
                   size="sm"
+                  marginRight={2}
                   cursor={"pointer"}
                   src={m.sender.picture}
                   name={m.sender.name}
